@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Something Special</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+    <div class="particles" aria-hidden="true"></div>
+
+    <button class="sound-toggle" type="button" aria-label="Toggle music">
+      <span>♫</span>
+      <span class="speaker">⌁</span>
+      <span id="soundText">Off</span>
+    </button>
+
+    <button class="back-button hidden" type="button" id="backButton">
+      <span>←</span>
+      <span>Back</span>
+    </button>
+
+    <main>
+      <section class="screen active" id="introScreen">
+        <div class="center-stack hero-stack">
+          <div class="sticker sticker-cat" aria-hidden="true">🐱</div>
+          <h1>Hai beautiful!<br /><br />I have made something special for you...</h1>
+          <p>Keep your volume up 🔊</p>
+          <button class="primary-button" type="button" id="beginButton">
+            <span>♡</span>
+            <span>Tap to Begin</span>
+            <span>♡</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="screen" id="trustScreen">
+        <div class="center-stack">
+          <div class="photo-sticker" aria-hidden="true">🥺</div>
+          <h2>Be honest with me...</h2>
+          <p>This is important to me 💕</p>
+          <h3>Do you trust me?</h3>
+          <div class="choice-row trust-choices">
+            <button class="yes-button" type="button" id="trustYes">Yes, I do 💞</button>
+            <button class="no-button runaway" type="button" id="trustNo">No 😔</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen" id="foreverScreen">
+        <div class="center-stack">
+          <div class="photo-sticker doodle" aria-hidden="true">🫶</div>
+          <h2>Last question, I promise!</h2>
+          <p>This one is the most important 🌟</p>
+          <h3>Do you know what I like the most?</h3>
+          <div class="choice-row">
+            <button class="yes-button" type="button" id="foreverYes">Click to know</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="screen scroll-screen" id="memoriesScreen">
+        <div class="section-header">
+          <h2>Your smile<br /></h2>
+          <p>You made every moment so special 💕</p>
+        </div>
+
+        <div class="carousel" aria-label="Memory gallery">
+          <button class="round-control" type="button" id="prevMemory" aria-label="Previous memory">‹</button>
+          <div class="memory-track" id="memoryTrack"></div>
+          <button class="round-control" type="button" id="nextMemory" aria-label="Next memory">›</button>
+        </div>
+        <div class="dots" id="memoryDots" aria-hidden="true"></div>
+        <p class="script-note">Now for the most important part...</p>
+        <button class="primary-button" type="button" id="messageButton">
+          <span>♡</span>
+          <span>See My Message</span>
+          <span>→</span>
+        </button>
+      </section>
+
+      <section class="screen" id="envelopeScreen">
+        <div class="center-stack envelope-stack">
+          <div class="envelope" aria-hidden="true">
+            <div class="letter-top"></div>
+            <div class="flap"></div>
+            <div class="body"></div>
+          </div>
+          <h2>This is just for <span>you</span>...</h2>
+          <button class="message-card" type="button" id="openLetter">
+            <span class="mini-sticker">💌</span>
+            <span>Tap to see what's inside</span>
+          </button>
+        </div>
+      </section>
+
+      <section class="screen scroll-screen" id="letterScreen">
+        <article class="letter-panel">
+          <div class="corner top-left"></div>
+          <div class="corner top-right"></div>
+          <div class="letter-sticker" aria-hidden="true">😻</div>
+          <div class="letter-copy">
+            <p>
+              Every moment with you feels like a beautiful dream I never want to
+              wake up from. You have shown me what love, comfort, and happiness
+              can feel like.
+            </p>
+            <p>
+              You are my favorite person, my safe place, and the reason so many
+              ordinary days become unforgettable. I am grateful for every second
+              we share.
+            </p>
+            <p>
+              PLACEHOLDER: Tell me your real message later and I will replace
+              this with your own words.
+            </p>
+            <p>
+              Every sunrise reminds me of your warmth, every star reminds me of
+              the sparkle in your eyes, and every song reminds me of you.
+            </p>
+            <div class="divider">💕</div>
+            <p class="signature">Forever yours,</p>
+            <strong>With all my heart and soul 💕</strong>
+          </div>
+        </article>
+        <button class="primary-button final-yes" type="button" id="finalYes">
+          <span>♡</span>
+          <span>Yes, I'm Yours Forever!</span>
+          <span>♡</span>
+        </button>
+      </section>
+
+      <section class="screen" id="celebrateScreen">
+        <div class="confetti" aria-hidden="true"></div>
+        <div class="fireworks" id="fireworks" aria-hidden="true"></div>
+        <button class="replay-corner" type="button" id="replayButton" aria-label="Replay all">
+          <span>↻</span>
+        </button>
+        <div class="center-stack celebration">
+          <div class="emoji-row" aria-hidden="true"></div>
+          <h1>Happy Birthday Shireen!<br /></h1>
+          <p>Have a blast! 🥰</p>
+          <div class="birth-counter" aria-live="polite">
+            <span>The world just got luckier since</span>
+            <strong id="birthCounter">Loading...</strong>
+          </div>
+          <em></em>
+          <div class="heart" aria-hidden="true"></div>
+        </div>
+      </section>
+    </main>
+
+    <div class="modal hidden" id="yesModal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-card">
+        <button class="close-modal" type="button" id="closeModal" aria-label="Close">×</button>
+        <div class="mini-cat" aria-hidden="true">🐾</div>
+        <h2 id="modalTitle">Just Say YES! 💕</h2>
+        <p>
+          Come on, don't make me wait! You know deep down in your heart that you
+          want to say yes. Let's make this moment magical together! 🌟
+        </p>
+        <div class="sparkle-line" aria-hidden="true">💕 ✨ 💖 ✨ 💕</div>
+        <button class="primary-button wide" type="button" id="modalYes">
+          <span>♥</span>
+          <span>Yes, I'll Say YES!</span>
+          <span>✧</span>
+        </button>
+      </div>
+    </div>
+
+    <audio id="music" src="assets/music.mp3" loop preload="auto"></audio>
+
+    <script src="script.js"></script>
+  </body>
+</html>
