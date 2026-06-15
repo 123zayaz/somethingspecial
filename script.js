@@ -36,13 +36,20 @@ const screenEls = screens.map((id) => document.getElementById(id));
 const backButton = $("#backButton");
 const soundText = $("#soundText");
 const music = $("#music");
+const finalMusic = $("#finalMusic");
+const fireworkSound = $("#fireworkSound");
 let fireworksTimer;
+let fireworkStartTimers = [];
 let musicAllowed = true;
 let wasOnMusicPage = false;
+let wasOnCelebrationPage = false;
 let birthCounterTimer;
 let runawayResetTimer;
 const musicScreens = [3, 4, 5];
+const celebrationScreen = screens.indexOf("celebrateScreen");
 const birthDate = new Date(2000, 6, 22, 0, 0, 0);
+
+fireworkSound.volume = 0.9;
 
 function showScreen(index) {
   currentScreen = Math.max(0, Math.min(index, screens.length - 1));
@@ -51,7 +58,7 @@ function showScreen(index) {
   window.scrollTo({ top: 0, behavior: "smooth" });
   syncPageMusic();
 
-  if (currentScreen === screens.indexOf("celebrateScreen")) {
+  if (currentScreen === celebrationScreen) {
     startCelebrationEffects();
   } else {
     stopCelebrationEffects();
@@ -75,8 +82,25 @@ function stopPageMusic() {
   music.pause();
 }
 
+function playFinalMusic(restart = false) {
+  soundText.textContent = "On";
+
+  if (restart) {
+    finalMusic.currentTime = 0;
+  }
+
+  finalMusic.play().catch(() => {
+    soundText.textContent = "Tap";
+  });
+}
+
+function stopFinalMusic() {
+  finalMusic.pause();
+}
+
 function syncPageMusic() {
   const isOnMusicPage = musicScreens.includes(currentScreen);
+  const isOnCelebrationPage = currentScreen === celebrationScreen;
 
   if (isOnMusicPage && musicAllowed) {
     playPageMusic(currentScreen === 3 && !wasOnMusicPage);
@@ -84,7 +108,24 @@ function syncPageMusic() {
     stopPageMusic();
   }
 
+  if (isOnCelebrationPage && musicAllowed) {
+    playFinalMusic(!wasOnCelebrationPage);
+  } else {
+    stopFinalMusic();
+  }
+
   wasOnMusicPage = isOnMusicPage;
+  wasOnCelebrationPage = isOnCelebrationPage;
+}
+
+function playFireworkSound() {
+  fireworkSound.currentTime = 0;
+  fireworkSound.play().catch(() => {});
+}
+
+function stopFireworkSound() {
+  fireworkSound.pause();
+  fireworkSound.currentTime = 0;
 }
 
 function makeParticles() {
@@ -131,13 +172,17 @@ function makeConfetti() {
 }
 
 function createFirework() {
+  if (currentScreen !== celebrationScreen) return;
+
   const layer = $("#fireworks");
   const burst = document.createElement("span");
   const colors = ["#ff3f9d", "#ff7abd", "#ffd166", "#a855f7", "#35c784"];
+  const x = 12 + Math.random() * 76;
+  const y = 8 + Math.random() * 44;
 
   burst.className = "firework";
-  burst.style.left = `${12 + Math.random() * 76}%`;
-  burst.style.top = `${8 + Math.random() * 44}%`;
+  burst.style.left = `${x}%`;
+  burst.style.top = `${y}%`;
   burst.style.color = colors[Math.floor(Math.random() * colors.length)];
 
   for (let i = 0; i < 18; i += 1) {
@@ -155,9 +200,12 @@ function createFirework() {
 function startCelebrationEffects() {
   stopCelebrationEffects();
   $("#fireworks").innerHTML = "";
+  playFireworkSound();
 
-  for (let i = 0; i < 5; i += 1) {
-    setTimeout(createFirework, i * 260);
+  createFirework();
+
+  for (let i = 1; i < 5; i += 1) {
+    fireworkStartTimers.push(setTimeout(createFirework, i * 260));
   }
 
   fireworksTimer = setInterval(createFirework, 650);
@@ -165,7 +213,10 @@ function startCelebrationEffects() {
 
 function stopCelebrationEffects() {
   clearInterval(fireworksTimer);
+  fireworkStartTimers.forEach(clearTimeout);
+  fireworkStartTimers = [];
   fireworksTimer = undefined;
+  stopFireworkSound();
 }
 
 function updateBirthCounter() {
